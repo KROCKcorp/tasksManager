@@ -4,6 +4,7 @@ import tasks from './routes/tasksRoutes.js';
 import autRoutes from './routes/authRoutes.js';
 import cors from 'cors';
 import errorHandler from './middleware/errorHandler.js';
+import notFound from './middleware/notFound.js';
 
 dotenv.config();
 const app = express();
@@ -15,6 +16,7 @@ app.use('/api/tasks', tasks);
 
 app.use('/api/auth', autRoutes);
 
+app.use(notFound);
 app.use(errorHandler);
 
 const port = process.env.PORT || 5000;
