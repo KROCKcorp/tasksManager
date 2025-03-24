@@ -5,8 +5,9 @@ import autRoutes from './routes/authRoutes.js';
 import cors from 'cors';
 import errorHandler from './middleware/errorHandler.js';
 import notFound from './middleware/notFound.js';
+import path from 'path';
 
-dotenv.config();
+dotenv.config({ path: path.resolve('backend', '.env') });
 const app = express();
 
 app.use(cors());
