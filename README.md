@@ -111,15 +111,16 @@ tasksManager/
 │   ├── middleware/
 │   ├── routes/
 │   ├── sql/
+│   └── task_manager_schema.sql
+│   ├── db.js
 │   └── server.js
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── router/
-│   │   └── views/
-│   └── vite.config.js
-└── sql/
-    └── task_manager_schema.sql
+└── frontend/
+    ├── src/
+    │   ├── components/
+    │   ├── router/
+    │   ├── views/
+    │   └── views/
+    └── vite.config.js
 ```
 
 ---
