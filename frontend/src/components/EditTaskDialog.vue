@@ -8,7 +8,7 @@ defineProps({
   },
   task: {
     type: Object,
-    default: () => ({}), // Provide default empty object
+    default: () => ({}),
   },
   statusOptions: {
     type: Array,
