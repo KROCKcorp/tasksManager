@@ -102,8 +102,9 @@ tasksManager/
 │   ├── middleware/
 │   ├── routes/
 │   ├── sql/
-│   └── task_manager_schema.sql
+│   ├── task_manager_schema.sql
 │   ├── db.js
+│   ├── .env
 │   └── server.js
 └── frontend/
     ├── src/
