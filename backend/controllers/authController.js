@@ -4,7 +4,7 @@ import pool from '../db.js';
 import dotenv from 'dotenv';
 import path from 'path';
 
-dotenv.config({ path: path.resolve('backend', '.env') });
+dotenv.config({ path: path.resolve('./.env') });
 
 export const userRegisteration = async (req, res) => {
   const { name, email, password } = req.body;
@@ -53,7 +53,7 @@ export const userLogin = async (req, res) => {
     }
 
     const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '24h' });
-    res.json({ token });
+    res.json({ token, user: { name: user.name, email: user.email } });
   } catch (error) {
     console.error('Login error', error);
     res.status(500).json({ msg: 'Internal server error' });
