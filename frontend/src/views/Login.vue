@@ -1,10 +1,11 @@
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { QCard, QCardSection, QInput, QBtn, QSpinner, Notify } from 'quasar';
 import api from '../services/api.js';
 
 const router = useRouter();
+const route = useRoute();
 
 const email = ref('');
 const password = ref('');
@@ -20,16 +21,16 @@ const handleLogin = async () => {
     const response = await api.post('/auth/login', { email: email.value, password: password.value });
     const { token } = response.data;
 
-    localStorage.setItem('token', token);
+    localStorage.setItem('authToken', token);
+
     Notify.create({
       type: 'positive',
       message: 'Login Successful',
       timeout: 1000,
     });
 
-    setTimeout(() => {
-      router.push('/dashboard');
-    }, 2000);
+    const redirect = route.query.redirect || '/tasks';
+    router.push(redirect);
   } catch (error) {
     errorMessage.value = error.response?.data?.message || 'Login failed. Please try again.';
   } finally {
