@@ -19,9 +19,10 @@ const handleLogin = async () => {
 
   try {
     const response = await api.post('/auth/login', { email: email.value, password: password.value });
-    const { token } = response.data;
+    const { token, user } = response.data;
 
     localStorage.setItem('authToken', token);
+    localStorage.setItem('username', user.name);
 
     Notify.create({
       type: 'positive',
@@ -36,6 +37,10 @@ const handleLogin = async () => {
   } finally {
     loading.value = false;
   }
+};
+
+const handleRegister = () => {
+  router.push('/register');
 };
 </script>
 
@@ -52,6 +57,7 @@ const handleLogin = async () => {
           <q-spinner />
         </template>
       </q-btn>
+      <q-btn :loading="loading" label="Register" color="primary" class="full-width q-mt-md" @click="handleRegister" />
       <p v-if="errorMessage" class="text-negative text-center q-mt-md">
         {{ errorMessage }}
       </p>

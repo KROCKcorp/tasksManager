@@ -46,6 +46,10 @@ const handleRegister = async () => {
     loading.value = false;
   }
 };
+
+const handleLogin = () => {
+  router.push('/login');
+};
 </script>
 
 <template>
@@ -62,6 +66,7 @@ const handleRegister = async () => {
           <q-spinner color="white" />
         </template>
       </q-btn>
+      <q-btn :loading="loading" label="Login" color="primary" class="full-width q-mt-md" @click="handleLogin" />
       <p v-if="errorMessage" class="text-red text-center q-mt-md">{{ errorMessage }}</p>
     </q-card-section>
   </q-card>
