@@ -42,16 +42,7 @@ mysql -u root -p < sql/task_manager_schema.sql
 
 ### Configure Environment
 
-Create `.env` in `backend/`:
-
-```env
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_mysql_password
-DB_NAME=task_manager
-JWT_SECRET=your_jwt_secret_here
-PORT=8000
-```
+Create `.env` in `backend/` (I provided a .env.example file in place of .env):
 
 | Variable    | Description            |
 | ----------- | ---------------------- |
