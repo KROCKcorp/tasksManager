@@ -7,7 +7,7 @@ import errorHandler from './middleware/errorHandler.js';
 import notFound from './middleware/notFound.js';
 import path from 'path';
 
-dotenv.config({ path: path.resolve('backend', '.env') });
+dotenv.config({ path: path.resolve('./.env') });
 const app = express();
 
 app.use(cors());
