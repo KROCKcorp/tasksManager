@@ -5,15 +5,32 @@ A full-stack task management application with Vue.js (Quasar) frontend and Node.
 ## Features
 
 - User authentication (login/register)
-- Create, edit, and track tasks
+- Create, edit, view, and delete tasks.
 - Task statuses (Pending/In Progress/Completed)
 - Responsive Quasar UI
 
 ## Tech Stack
 
-- **Frontend**: Vue 3 (Composition) + Quasar + Vite
+- **Frontend**: Vue 3 (Composition) + Quasar + Vite + Axios
 - **Backend**: Node.js + Express + MySQL
 - **Database**: MySQL 8.0
+
+---
+## Screenshots
+
+### Login & Registeration:
+![Login Page](https://github.com/KROCKcorp/tasksManager/blob/main/screenshots/Login.png)
+
+![Register Page](https://github.com/KROCKcorp/tasksManager/blob/main/screenshots/Register.png)
+
+### Tasks Operations:
+![All Task](https://github.com/KROCKcorp/tasksManager/blob/main/screenshots/Tasks.png)
+
+![View Task](https://github.com/KROCKcorp/tasksManager/blob/main/screenshots/ViewTask.png)
+
+![Create New Task](https://github.com/KROCKcorp/tasksManager/blob/main/screenshots/CreateNewTask.png)
+
+![Edit Task](https://github.com/KROCKcorp/tasksManager/blob/main/screenshots/EditTask.png)
 
 ---
 
