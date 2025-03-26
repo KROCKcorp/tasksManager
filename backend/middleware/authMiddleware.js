@@ -4,7 +4,9 @@ export const authenticateUser = (req, res, next) => {
   const token = req.header('Authorization')?.split(' ')[1];
 
   if (!token) {
-    return res.status(401).json({ message: 'Access Denied' });
+    const error = new Error('Access Denied');
+    error.status = 401;
+    return next(error);
   }
 
   try {
@@ -12,6 +14,8 @@ export const authenticateUser = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (error) {
-    res.status(403).json({ message: 'Invalid Token' });
+    const authError = new Error('Invalid Token');
+    authError.status = 403;
+    next(authError);
   }
 };
