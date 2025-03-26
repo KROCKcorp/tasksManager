@@ -63,7 +63,7 @@ cd backend && npm install
 cd ../frontend && npm install
 
 # Root Folder
-cd npm install
+npm install
 ```
 
 ## 4. Run the Application
