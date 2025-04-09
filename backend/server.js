@@ -15,14 +15,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Test database connection and sync models
 const initializeDatabase = async () => {
   try {
     await sequelize.authenticate();
-    // Sync all models (use { force: true } only in development to drop tables)
-    await sequelize.sync({ alter: true }); // Alter tables to match models
+    console.log('Database connected.');
+
+    if (process.env.NODE_ENV === 'development') {
+      const { execSync } = require('child_process');
+      execSync('npx sequelize-cli db:migrate', { stdio: 'inherit' });
+    }
   } catch (error) {
-    console.error('Unable to connect to the database:', error);
+    console.error('Database error:', error);
   }
 };
 
