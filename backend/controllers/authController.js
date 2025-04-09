@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import pool from '../db.js';
+import { User } from '../models/index.js';
 import dotenv from 'dotenv';
 import path from 'path';
 
@@ -16,9 +16,9 @@ export const userRegisteration = async (req, res, next) => {
       return next(error);
     }
 
-    const [existingUser] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
+    const existingUser = await User.findOne({ where: { email } });
 
-    if (existingUser.length > 0) {
+    if (existingUser) {
       const error = new Error('Email already in use');
       error.status = 400;
       return next(error);
@@ -27,7 +27,11 @@ export const userRegisteration = async (req, res, next) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    await pool.query('INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)', [name, email, hashedPassword]);
+    await User.create({
+      name,
+      email,
+      password_hash: hashedPassword,
+    });
 
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
@@ -45,15 +49,14 @@ export const userLogin = async (req, res, next) => {
       return next(error);
     }
 
-    const [users] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
+    const user = await User.findOne({ where: { email } });
 
-    if (users.length === 0) {
+    if (!user) {
       const error = new Error('Invalid email or password');
       error.status = 401;
       return next(error);
     }
 
-    const user = users[0];
     const isMatch = await bcrypt.compare(password, user.password_hash);
 
     if (!isMatch) {

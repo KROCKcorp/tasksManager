@@ -1,10 +1,10 @@
-import pool from '../db.js';
+import { Task } from '../models/index.js';
 
 const validStatuses = ['pending', 'in-progress', 'completed'];
 
 export const getUserTasks = async (req, res, next) => {
   try {
-    const [tasks] = await pool.query('SELECT * FROM tasks WHERE user_id = ?', [req.user.id]);
+    const tasks = await Task.findAll({ where: { user_id: req.user.id } });
     res.json(tasks);
   } catch (error) {
     next(error);
@@ -26,12 +26,13 @@ export const createTask = async (req, res, next) => {
   }
 
   try {
-    await pool.query('INSERT INTO tasks (user_id, title, description, status) VALUES (?,?,?,?)', [
-      req.user.id,
+    await Task.create({
+      user_id: req.user.id,
       title,
       description,
-      status,
-    ]);
+      status: status || 'pending',
+    });
+
     res.status(201).json({ msg: 'Task was added successfully' });
   } catch (error) {
     next(error);
@@ -55,12 +56,17 @@ export const updateTask = async (req, res, next) => {
   }
 
   try {
-    const [result] = await pool.query(
-      'UPDATE tasks SET title = ?, description = ?, status = ? WHERE id = ? AND user_id = ?',
-      [title, description, status, id, req.user.id]
+    const [affectedRows] = await Task.update(
+      { title, description, status },
+      {
+        where: {
+          id,
+          user_id: req.user.id,
+        },
+      }
     );
 
-    if (result.affectedRows === 0) {
+    if (affectedRows === 0) {
       const error = new Error('Task not found');
       error.status = 400;
       return next(error);
@@ -75,9 +81,9 @@ export const updateTask = async (req, res, next) => {
 export const deleteTask = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const [result] = await pool.query('DELETE FROM tasks WHERE id = ? AND user_id = ?', [id, req.user.id]);
+    const affectedRows = await Task.destroy({ where: { id, user_id: req.user.id } });
 
-    if (result.affectedRows === 0) {
+    if (affectedRows === 0) {
       const error = new Error('Task not found');
       error.status = 400;
       return next(error);
